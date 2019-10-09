@@ -55,7 +55,7 @@ def linear_regresssion_GD_mse(y, tx, initial_w, max_itters, gamma):
 
     return losses, w
 
-def least_squares_SGD(y,tx,initial_w,max_iters,gamma):
+def least_squares_SGD(y,tx,initial_w,max_iters,gamma): #giving 0.745 acc
     print("Calc Linear regression using stochastic gradient descent")
     """Stochastic gradient descent algorithm."""
     # ***************************************************
