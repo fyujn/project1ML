@@ -53,6 +53,13 @@ def create_csv_submission(ids, y_pred, name):
 def sigm(tx):
     return 1/(1+np.exp(-tx))
 
+def compute_loss_rmse(y,tx,w):
+    ypred = predict_labels(w,tx)
+    summ = np.sum(np.power((ypred-y),2))
+    dividebyN = summ / len(y)
+    result = np.sqrt(dividebyN)
+    return result
+
 def compute_loss_mse(y, tx, w): # via mse
     """Calculate the loss.
     You can calculate the loss using mse or mae.
