@@ -12,6 +12,20 @@ from proj1_helpers import *
 #from scripts.proj1_helpers import *
 
 
+
+def handleOutliers(tx):
+
+
+
+    # think of mean or median
+    meansPerColumn = np.mean(tx, axis=0)
+
+    for i in range(30):
+        for j in range(250000):
+            if tx[j][i] == -999:5
+                tx[j][i] = meansPerColumn[i]
+    return tx
+
 def linear_regresssion_GD_mse(y, tx, initial_w, max_itters, gamma):
     print("calc Linear regression using gradient descent")
     """Gradient descent algorithm."""
@@ -182,7 +196,7 @@ def run_ridge(y,tx):
     """
     losses = []
     ws = []
-    for i in np.arange(0.5,0.6,0.001):
+    for i in np.arange(0.5,0.6,0.01):
         w_new = ridge_regression(y,tx,i)
         loss = compute_loss_rmse(y, tx, w_new)
         losses.append(loss)
@@ -201,11 +215,18 @@ def run_ridge(y,tx):
 
 
 
+
+
 def run():
+    print("Load data ...")
     DATA_TRAIN_PATH = '../data/train.csv'
     y, tx, ids = load_csv_data(DATA_TRAIN_PATH)
     w = np.zeros(30)
 
+    print("Handle Outliers per mean ...")
+    handleOutliers(tx)
+
+    print("Run Method ...")
     #w_new = least_squares_GD(y, tx, w, 200, 1)
     #w_new = least_squares_SGD(y, tx, w, 100000, 0.01)
     #w_new = logistic_regression(y,tx,w,1000,0.2)
@@ -214,6 +235,8 @@ def run():
 
     DATA_TEST_PATH = '../data/test.csv'
 
+
+    print("Output Data ...")
     #execute file
     y_test, tx_test, ids_test = load_csv_data(DATA_TEST_PATH)
 
@@ -222,6 +245,7 @@ def run():
 
 w_compare = [-2.80368247e+01,5.39471822e-01,-1.00522284e+01,1.13621369e+01,4.25777258e+02,5.05303694e+02,4.25229617e+02,-4.92012404e-01,3.50325763e+00,3.41860458e+01,2.13402302e-02,9.88750534e-02,4.25298113e+02,-5.73547481e+00,7.63626536e-03,1.38542432e-02,-1.44032246e+00,1.02196190e-02,-1.20750185e-02,3.44476629e+00,-3.26639200e-03,2.92616549e+01,5.18460080e-01,2.19436118e+02,2.03730018e+02,2.03732874e+02,4.43313020e+02,4.25186123e+02,4.25193362e+02,4.13618429e+01]
 w_0745 = [1.60583532e-03,-1.44064742e-01,-1.21068034e-01,-1.09519870e-02-3.87743154e-01,9.46936127e-03,-5.20717046e-01,6.50207171e+00-7.61470193e-04,-5.45449842e+01,-4.42440406e+00,1.90157268e+00,1.28065548e+00,5.47101777e+01,-6.63603993e-03,-1.90865700e-02,5.48053124e+01,-1.06832978e-02,1.94699716e-02,7.38450105e-02,7.08974899e-03,-1.08668920e-02,-6.60896070e+00,-2.81600995e-02,1.66286578e-02,2.04234543e-02,-3.36094832e-02,-1.16732964e-01-2.22175995e-01,5.45541828e+01]
+
 
 
 run()
